@@ -1,19 +1,11 @@
 <?php
 
-// 受け取れず表示されてしまう
-function test1($url)
+function p($a)
 {
-  // セッションを初期化
-  $conn = curl_init();
-  // リクエスト先urlをセット
-  curl_setopt($conn, CURLOPT_URL, $url);
-  // リクエストを実行
-  curl_exec($conn);
-  // セッションを閉じる
-  curl_close($conn);
+  echo $a . '<br>';
 }
 
-function test2($url)
+function mycurl($url)
 {
   // cURLを初期化して使用可能にする
   $curl = curl_init();
@@ -29,16 +21,18 @@ function test2($url)
   return $result;
 }
 
-function p($a)
+function callPhpPreChallenge3($targetNum)
 {
-  echo $a . '<br>';
+  $url = 'http://yuzuntu.com:10080/php-pre-challenge3/index.php?target=' . $targetNum;
+  return mycurl($url);
 }
+
 
 function main()
 {
-
-  p(test2('http://yuzuntu.com:10080/php-pre-challenge3/index.php?target=5'));
-  p(test2('http://yuzuntu.com:10080/php-pre-challenge3/index.php?target=6'));
+  for ($i = 1; $i <= 40; $i++) {
+    p($i . ' => ' . callPhpPreChallenge3($i));
+  }
 }
 
 main();
